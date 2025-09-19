@@ -132,7 +132,7 @@ void runQuery(sqlite3* db, sqlite3_stmt* stmt, int index, std::vector<std::unord
     } catch (const std::logic_error& sqlErr) {
         queryErrors.insert(TableEnum(index));
     }
-    sqlite3_finalize(stmt);
+    if (stmt) sqlite3_finalize(stmt);
 }
 
 // Read the tables in the database, and returns whether it was successful
@@ -148,8 +148,8 @@ bool readDB(const std::filesystem::path &saveFile, const std::filesystem::path &
     fs << dbData;
     fs.close();
     // Connect with sqlite3
-    sqlite3* db;
-    sqlite3_stmt* stmt;
+    sqlite3* db = nullptr;
+    sqlite3_stmt* stmt = nullptr;
     int err = sqlite3_open(dbFile.string().c_str(), &db);
     if (err == SQLITE_OK) {
         // Run each query
@@ -405,12 +405,14 @@ bool legilimize(const std::filesystem::path& saveFile, const std::filesystem::pa
         }
     }
     // Open output file
-    std::ofstream fs = nullptr;
+    std::ofstream fs;
     if (!outFile.empty()) {
-        fs = std::ofstream(outFile.string(), std::ios::out);
+        fs.open(outFile.string(), std::ios::out);
         if (fs.is_open()) {
             printTitle(fs);
-            fs << std::endl << "Selected save file:" << std::endl << saveFile.string() << std::endl;
+            fs << '\n'
+                << "Selected save file:\n"
+                << saveFile.string() << '\n';
         }
     }
     if (missingByRegion.empty() && missingByType.empty()) {

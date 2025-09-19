@@ -149,9 +149,10 @@ unsigned int getChoice(unsigned int maxVal, const std::string &prompt) {
     std::string line;
     while (true) {
         std::cout << prompt << std::endl;
-        std::getline(std::cin, line);
+        if (!std::getline(std::cin, line)) return 0;
+        if (!line.empty() && line.back() == '\r') line.pop_back();
         std::istringstream iss(line);
-        if (iss >> choice >> std::ws && iss.get() == EOF && choice <= maxVal) {
+        if ((iss >> choice) && (iss >> std::ws).peek() == std::char_traits<char>::eof() && choice <= maxVal) {
             return choice;
         }
         std::cout << "Invalid choice, must be between 0 and " << maxVal << ", inclusive." << std::endl;
