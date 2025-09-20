@@ -22,6 +22,13 @@ You can find the old (Python) version of this tool [here](https://github.com/Mal
 - Collectible items that can be bought from vendors
 - Collectible items that are rewards for completing quests
 
+## Compressed save support (Oodle)
+Modern versions of Hogwarts Legacy compress the RawDatabaseImage (SQLite) inside
+the save file using Oodle Kraken.
+
+- This feature reuses and adapts parts of the open‑source project “hlsavetool” by Katt (MIT).
+- For compressed saves, you must **download `oo2core_9_win64.dll` from [here]**(https://modding.wiki/hogwartslegacy/oo2core_9_win64.dll) and **place it in the same folder as `Legilimens.exe`**. The DLL is not distributed with this tool.
+
 ## Usage
 There's now a video guide, available [here](https://www.youtube.com/watch?v=wWsCV8JuCGo)
 
@@ -67,3 +74,4 @@ Some example commands:
 - Thanks to [p-ranav](https://github.com/p-ranav) for creating the [argparse](https://github.com/p-ranav/argparse) and [tabulate](https://github.com/p-ranav/tabulate) C++ libraries, and [aafulei](https://github.com/aafulei) for creating the [color-console](https://github.com/aafulei/color-console) library.
 - Thanks to [kaivar](https://www.nexusmods.com/hogwartslegacy/users/49715466) for creating a fix for the [139/140 conjuration bug](https://www.nexusmods.com/hogwartslegacy/mods/832) and the [butterfly bug](https://www.nexusmods.com/hogwartslegacy/mods/778).
 - Thanks to [lillaka](https://www.nexusmods.com/users/2211740) for not only giving me ideas to improve the mod, but actually implementing those ideas and giving me the code.
+- Thanks to [Katt](https://github.com/topche-katt) for the open‑source project [hlsavetool](https://github.com/topche-katt/hlsavetool) (MIT), parts of which were adapted for internal Oodle save decompression support.

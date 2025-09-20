@@ -11,6 +11,7 @@
 #include "tabulate.hpp"
 #include "argparse.hpp"
 #include "color.hpp"
+#include "decompress.h"
 
 #define DB_IMAGE_STR "RawDatabaseImage"
 #define VERSION "0.2.4"
@@ -106,6 +107,11 @@ bool extractDB(const std::filesystem::path &saveFile, std::string &dbData) {
     unsigned int dbSize = readU32(saveData, dbStartIndex-4);
     // Extract DB
     dbData = saveData.substr(dbStartIndex, dbSize);
+    // try to decompress
+    if (!decompressDb(dbData, false)) {
+        std::cerr << dye::red("Legilimens failed to decompress save database") << std::endl;
+        return false;
+    }
     return true;
 }
 
